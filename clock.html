@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            color: #FFD700; /* Golden font color */
+            overflow: hidden;
+        }
+        .clock-container {
+            text-align: center;
+            padding: 20px;
+        }
+        .time {
+            font-size: 6em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .date {
+            font-size: 3.6em;
+            margin: 10px 0;
+        }
+        @media (max-width: 600px) {
+            .time {
+                font-size: 8em;
+            }
+            .date {
+                font-size: 3.0em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">January 1, 2025</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            // Create a date object with New York timezone
+            const now = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+            const dateObj = new Date(now);
+
+            // Format time (HH:MM:SS)
+            const hours = dateObj.getHours().toString().padStart(2, '0');
+            const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+            const seconds = dateObj.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+
+            // Format date (Day, Month Date, Year)
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = dateObj.toLocaleDateString('en-US', options);
+
+            // Update DOM
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+        }
+
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
